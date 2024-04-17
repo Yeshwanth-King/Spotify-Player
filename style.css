@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+body {
+  background-color: black;
+  color: white;
+}
+.left {
+  width: 25vw;
+}
+.right {
+  width: 75vw;
+  position: relative;
+}
+.home ul li {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  width: 20px;
+  padding-top: 20px;
+}
+.heading {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+}
+.library {
+  min-height: 83vh;
+  position: relative;
+}
+.heading img {
+  width: 30px;
+}
+
+.footer {
+  display: flex;
+  font-size: 10px;
+  gap: 13px;
+  position: absolute;
+  bottom: 5px;
+  padding: 10px 0px;
+}
+.footer a {
+  color: grey;
+  text-decoration: none;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  background-color: rgb(40, 40, 40);
+}
+
+.header > * {
+  padding: 20px;
+}
+
+.spotifyPlaylist {
+  padding: 1rem;
+}
+.spotifyPlaylist .card {
+  width: 165px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #252525;
+  position: relative;
+}
+.card img {
+  width: 100%;
+  object-fit: contain;
+}
+.card > * {
+  padding-top: 10px;
+}
+.card-container {
+  flex-wrap: wrap;
+  gap: 25px;
+  margin: 30px;
+  max-height: 62vh;
+  overflow-y: scroll;
+}
+.play {
+  position: absolute;
+  top: 250px;
+  right: 15px;
+  opacity: 0;
+  transition: all 150ms ease-in;
+}
+.play-toggle {
+  opacity: 1;
+  top: 150px;
+}
+
+.buttons > * {
+  margin: 0 10px;
+}
+.signupbtn {
+  background-color: rgb(40, 40, 40);
+  color: rgb(123, 123, 123);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 110ms ease;
+}
+.signupbtn:hover {
+  font-size: 17px;
+  color: white;
+}
+.loginbtn {
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 10px;
+  color: rgb(89, 88, 88);
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+.loginbtn:hover {
+  color: black;
+}
+
+.player {
+  position: absolute;
+  bottom: 0;
+  background-color: rgb(65, 255, 97);
+  width: 98%;
+  padding: 10px;
+}
+.soundButtons {
+  gap: 36px;
+}
+.soundbut {
+  cursor: pointer;
+}
+.songsList ul li {
+  list-style: decimal;
+  margin: 0 40px;
+  padding: 10px;
+  border: white 2px solid;
+  border-radius: 8px;
+}
