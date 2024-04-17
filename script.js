@@ -1,6 +1,6 @@
 console.log("Let's Goooooooo");
 let getSong = async () => {
-  let a = await fetch("https://github.com/Yeshwanth-King/Spotify-Player/tree/main/Songs");
+  let a = await fetch("/Songs");
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
