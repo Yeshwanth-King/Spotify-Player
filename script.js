@@ -19,9 +19,10 @@ let getSong = async () => {
 async function main() {
   let songs = await getSong();
   let playBut = document.querySelector(".playbut");
+
   playBut.addEventListener("click", () => {
     let t = 0;
-    var audio = new Audio(songs[1]);
+    var audio = new Audio(songs[8]);
     if (t == 0) {
       audio.play();
       playBut.src = "Svgs/pause.svg";
