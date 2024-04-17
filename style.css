@@ -142,10 +142,17 @@ body {
 .soundbut {
   cursor: pointer;
 }
+.songsList ul {
+  margin: 25px -30px;
+}
 .songsList ul li {
-  list-style: decimal;
+  width: 200px;
   margin: 0 40px;
   padding: 10px;
   border: white 2px solid;
   border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  margin-top: 15px;
 }

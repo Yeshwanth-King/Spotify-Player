@@ -12,7 +12,23 @@ let getSong = async () => {
       song.push(element.href);
     }
   }
-  console.log(song);
+  let songli = document.querySelector(".songul");
+  for (let key in song) {
+    songli.innerHTML += `
+      <li>
+      <img class="invert" src="Svgs/music.svg" alt="" />
+      <div>
+      ${song[key].split("/Songs/")[1].replaceAll("%20", " ").split(".mp3")[0]}
+      </div>
+      <img
+        class="invert"
+        src="Svgs/play.svg"
+        style="cursor: pointer"
+        alt=""
+      />
+    </li>
+      `;
+  }
   return song;
 };
 
@@ -22,7 +38,7 @@ async function main() {
 
   playBut.addEventListener("click", () => {
     let t = 0;
-    var audio = new Audio(songs[8]);
+    var audio = new Audio(songs[2]);
     if (t == 0) {
       audio.play();
       playBut.src = "Svgs/pause.svg";
