@@ -1,4 +1,10 @@
 console.log("Let's Goooooooo");
+
+const playAudio = (track) => {
+  let audio = new Audio("/Songs/" + track);
+  audio.play();
+};
+
 let getSong = async () => {
   let a = await fetch("/Songs");
   let response = await a.text();
@@ -17,8 +23,10 @@ let getSong = async () => {
     songli.innerHTML += `
       <li>
       <img class="invert" src="Svgs/music.svg" alt="" />
+      <div class = "info">
       <div>
       ${song[key].split("/Songs/")[1].replaceAll("%20", " ").split(".mp3")[0]}
+      </div>
       </div>
       <img
         class="invert"
@@ -29,6 +37,20 @@ let getSong = async () => {
     </li>
       `;
   }
+
+  let songList = Array.from(
+    document.querySelector(".songsList").getElementsByTagName("li")
+  );
+  songList.forEach((element) => {
+    element.addEventListener("click", () => {
+      let adu = element
+        .querySelector(".info")
+        .firstElementChild.innerHTML.trim();
+      adu += ".mp3";
+      playAudio(adu);
+    });
+  });
+
   return song;
 };
 
@@ -43,7 +65,7 @@ async function main() {
       audio.play();
       playBut.src = "Svgs/pause.svg";
       t = 1;
-    } else if (t == 1) {
+    } else {
       playBut.src = "Svgs/play.svg";
       audio.pause();
       t = 0;

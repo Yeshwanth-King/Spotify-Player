@@ -163,7 +163,12 @@ body {
 .soundbut {
   cursor: pointer;
 }
+.songsList {
+  height: 74vh;
+  overflow-x: scroll;
+}
 .songsList ul {
+  width: 24vw;
   margin: 25px -30px;
 }
 .songsList ul li {
@@ -175,5 +180,5 @@ body {
   display: flex;
   justify-content: space-between;
   font-size: 15px;
-  margin-top: 15px;
+  margin-bottom: 20px;
 }
