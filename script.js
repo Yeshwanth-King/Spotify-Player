@@ -36,14 +36,14 @@ async function main() {
   let songs = await getSong();
   let playBut = document.querySelector(".playbut");
 
+  let t = 0;
   playBut.addEventListener("click", () => {
-    let t = 0;
     var audio = new Audio(songs[2]);
     if (t == 0) {
       audio.play();
       playBut.src = "Svgs/pause.svg";
       t = 1;
-    } else {
+    } else if (t == 1) {
       playBut.src = "Svgs/play.svg";
       audio.pause();
       t = 0;
