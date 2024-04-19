@@ -60,7 +60,11 @@ body {
 }
 
 .header > * {
-  padding: 20px;
+  padding: 14px;
+}
+.nav {
+  display: flex;
+  align-items: center;
 }
 
 .spotifyPlaylist {
@@ -140,12 +144,13 @@ body {
   margin-bottom: 10px;
 }
 .song-time {
-  border: 2px solid rgb(200, 200, 200);
-  height: 3px;
+  border: 3px solid rgb(200, 200, 200);
+  height: 0px;
   width: 98%;
   border-radius: 15px;
   position: absolute;
   bottom: 10px;
+  cursor: pointer;
 }
 .circle {
   height: 15px;
@@ -154,7 +159,7 @@ body {
   background-color: rgb(200, 200, 200);
   position: absolute;
   bottom: -6px;
-  left: 0;
+  left: -3px;
   transition: left 0.5s;
 }
 .soundButtons {
@@ -175,10 +180,64 @@ body {
   width: 19vw;
   margin: 0 40px;
   padding: 10px;
-  border: white 2px solid;
+  border: white 1px solid;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
   font-size: 15px;
   margin-bottom: 20px;
+}
+.currentsong {
+  display: flex;
+  justify-content: space-between;
+}
+.hamburger {
+  display: none;
+}
+.cross {
+  display: visible;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 40px;
+  cursor: pointer;
+  transition: all 0.7s;
+}
+@media (max-width: 1300px) {
+  .left {
+    width: 25vw;
+    position: absolute;
+    transition: all 0.7s;
+    z-index: 1;
+    left: -100%;
+  }
+  .right {
+    width: 100vw;
+    height: 100vh;
+  }
+  .hamburger {
+    display: inline;
+    height: 40px;
+    cursor: pointer;
+  }
+
+  .player {
+    position: absolute;
+    bottom: 9px;
+    height: 40px;
+    background-color: rgb(70 83 72);
+    width: 96%;
+    padding: 10px;
+    border-radius: 25px;
+    margin: 0 1vw;
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 500px) {
+  .songsList ul li {
+    width: 84vw;
+  }
+  .left {
+    width: 99vw;
+  }
 }
