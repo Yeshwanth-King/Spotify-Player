@@ -71,7 +71,7 @@ body {
   padding: 1rem;
 }
 .spotifyPlaylist .card {
-  width: 165px;
+  width: 150px;
   padding: 10px;
   border-radius: 5px;
   background-color: #252525;
@@ -248,5 +248,16 @@ body {
   }
   .soundButtons {
     gap: 20px;
+  }
+  .card-container {
+    flex-wrap: wrap;
+    gap: 25px;
+    margin: 10px 0;
+    max-height: 75vh;
+    overflow-y: auto;
+    justify-content: center;
+  }
+  .spotifyPlaylist .card {
+    width: 330px;
   }
 }

@@ -1,11 +1,15 @@
 let playBut = document.querySelector(".playbut");
 let currentSong = new Audio();
-
+let songs;
 function secondsToMinutesSeconds(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = Math.floor(seconds % 60);
   return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 }
+
+let playNext = () => {
+  currentSong;
+};
 
 const playAudio = (track, pause = false) => {
   currentSong.src = "/Songs/" + track;
@@ -33,7 +37,7 @@ let getSong = async () => {
 };
 
 async function main() {
-  let songs = await getSong();
+  songs = await getSong();
   playAudio(songs[0].split("/Songs/")[1].replaceAll("%20", " "), true);
 
   let songli = document.querySelector(".songul");
@@ -103,6 +107,18 @@ async function main() {
   document.querySelector(".cross").addEventListener("click", () => {
     document.querySelector(".left").style.left = "-100%";
     document.querySelector(".left").style.transition = "all 0.7s";
+  });
+
+  previous.addEventListener("click", () => {
+    console.log("P clicked");
+  });
+
+  next.addEventListener("click", () => {
+    console.log("N clicked");
+    console.log(currentSong.src);
+    console.log(songs);
+    let inde = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
+    playAudio(songs[inde + 1]);
   });
 }
 main();
