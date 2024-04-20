@@ -89,7 +89,7 @@ body {
   gap: 25px;
   margin: 30px;
   max-height: 62vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .play {
   position: absolute;
@@ -170,7 +170,7 @@ body {
 }
 .songsList {
   height: 74vh;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 .songsList ul {
   width: 24vw;
@@ -239,5 +239,14 @@ body {
   }
   .left {
     width: 99vw;
+  }
+  .player {
+    width: 93%;
+  }
+  .song-time {
+    width: 94%;
+  }
+  .soundButtons {
+    gap: 20px;
   }
 }

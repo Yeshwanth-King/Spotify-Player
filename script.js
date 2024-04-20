@@ -91,7 +91,6 @@ async function main() {
   let seek = document.querySelector(".song-time");
   seek.addEventListener("click", (e) => {
     let percent = (e.offsetX / e.target.getBoundingClientRect().width) * 100;
-    console.log(percent);
     document.querySelector(".circle").style.left = percent + "%";
     currentSong.currentTime = (currentSong.duration * percent) / 100;
   });
