@@ -7,12 +7,8 @@ function secondsToMinutesSeconds(seconds) {
   return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 }
 
-let playNext = () => {
-  currentSong;
-};
-
 const playAudio = (track, pause = false) => {
-  currentSong.src = "/Songs/" + track;
+  currentSong.src = "/Songs/RepeatSongs/" + track;
   if (!pause) {
     currentSong.play();
     playBut.src = "Svgs/pause.svg";
@@ -20,8 +16,8 @@ const playAudio = (track, pause = false) => {
   document.querySelector(".song-info").innerHTML = track.split(".mp3")[0];
   document.querySelector(".act-time").innerHTML = "00:00/00:00";
 };
-let getSong = async () => {
-  let a = await fetch("/Songs");
+let getSong = async (folder) => {
+  let a = await fetch(`/Songs/${folder}`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -37,8 +33,11 @@ let getSong = async () => {
 };
 
 async function main() {
-  songs = await getSong();
-  playAudio(songs[0].split("/Songs/")[1].replaceAll("%20", " "), true);
+  songs = await getSong("RepeatSongs");
+  playAudio(
+    songs[0].split("/Songs/RepeatSongs/")[1].replaceAll("%20", " "),
+    true
+  );
 
   let songli = document.querySelector(".songul");
   for (let key in songs) {
@@ -47,7 +46,12 @@ async function main() {
     <img class="invert" src="Svgs/music.svg" alt="" />
     <div class = "info">
     <div>
-      ${songs[key].split("/Songs/")[1].replaceAll("%20", " ").split(".mp3")[0]}
+      ${
+        songs[key]
+          .split("/Songs/RepeatSongs/")[1]
+          .replaceAll("%20", " ")
+          .split(".mp3")[0]
+      }
       </div>
       </div>
       <img
@@ -111,14 +115,34 @@ async function main() {
 
   previous.addEventListener("click", () => {
     console.log("P clicked");
+    let inde = songs.indexOf(currentSong.src);
+    if (inde > 0) {
+      playAudio(
+        songs[inde - 1].split("/Songs/RepeatSongs/")[1].replaceAll("%20", " ")
+      );
+    } else if (inde == 0) {
+      playAudio(
+        songs[0].split("/Songs/RepeatSongs/")[1].replaceAll("%20", " ")
+      );
+    }
   });
 
   next.addEventListener("click", () => {
-    console.log("N clicked");
-    console.log(currentSong.src);
-    console.log(songs);
-    let inde = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
-    playAudio(songs[inde + 1]);
+    currentSong.pause();
+    let inde = songs.indexOf(currentSong.src);
+    if (inde < songs.length - 1) {
+      playAudio(
+        songs[inde + 1].split("/Songs/RepeatSongs/")[1].replaceAll("%20", " ")
+      );
+    } else if (inde == songs.length - 1) {
+      playAudio(
+        songs[0].split("/Songs/RepeatSongs/")[1].replaceAll("%20", " ")
+      );
+    }
+  });
+
+  document.querySelector(".range").addEventListener("change", (e) => {
+    currentSong.volume = e.target.value / 100;
   });
 }
 main();

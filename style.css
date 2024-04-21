@@ -6,6 +6,9 @@
   font-weight: 700;
   font-style: normal;
 }
+:root {
+  --a: 0;
+}
 body {
   background-color: black;
   color: white;
@@ -76,13 +79,20 @@ body {
   border-radius: 5px;
   background-color: #252525;
   position: relative;
+  transition: all 0.5s;
 }
 .card img {
   width: 100%;
   object-fit: contain;
+  border-radius: 20px;
 }
 .card > * {
   padding-top: 10px;
+}
+.card:hover {
+  background-color: rgb(71, 71, 71);
+  cursor: pointer;
+  --a: 1;
 }
 .card-container {
   flex-wrap: wrap;
@@ -93,16 +103,11 @@ body {
 }
 .play {
   position: absolute;
-  top: 250px;
+  bottom: 80px;
   right: 15px;
-  opacity: 0;
-  transition: all 150ms ease-in;
+  opacity: var(--a);
+  transition: all 0.5s ease-out;
 }
-.play-toggle {
-  opacity: 1;
-  top: 150px;
-}
-
 .buttons > * {
   margin: 0 10px;
 }
@@ -136,7 +141,7 @@ body {
 .player {
   position: absolute;
   bottom: 0;
-  height: 40px;
+  height: 50px;
   background-color: rgb(70 83 72);
   width: 98%;
   padding: 10px;
@@ -164,9 +169,27 @@ body {
 }
 .soundButtons {
   gap: 36px;
+  gap: 36px;
+  position: absolute;
+  left: 500px;
 }
 .soundbut {
   cursor: pointer;
+}
+.song-info {
+  width: 135px;
+}
+.info div {
+  word-break: break-all;
+}
+.timevol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.volume {
+  display: flex;
+  align-items: center;
 }
 .songsList {
   height: 74vh;
@@ -224,7 +247,7 @@ body {
   .player {
     position: absolute;
     bottom: 9px;
-    height: 40px;
+    height: auto;
     background-color: rgb(70 83 72);
     width: 96%;
     padding: 10px;
@@ -242,12 +265,15 @@ body {
   }
   .player {
     width: 93%;
+    /* height: 12vh; */
   }
   .song-time {
     width: 94%;
   }
   .soundButtons {
+    margin: 6px 0;
     gap: 20px;
+    position: unset;
   }
   .card-container {
     flex-wrap: wrap;
@@ -259,5 +285,18 @@ body {
   }
   .spotifyPlaylist .card {
     width: 330px;
+  }
+  .song-info {
+    width: auto;
+  }
+  .currentsong {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .timevol {
+    margin-bottom: 10px;
   }
 }
