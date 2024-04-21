@@ -1,6 +1,7 @@
 let playBut = document.querySelector(".playbut");
 let currentSong = new Audio();
 let songs;
+let currFolder = "NewSongs";
 function secondsToMinutesSeconds(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = Math.floor(seconds % 60);
@@ -8,7 +9,7 @@ function secondsToMinutesSeconds(seconds) {
 }
 
 const playAudio = (track, pause = false) => {
-  currentSong.src = "/Songs/RepeatSongs/" + track;
+  currentSong.src = `/Songs/${currFolder}/` + track;
   if (!pause) {
     currentSong.play();
     playBut.src = "Svgs/pause.svg";
@@ -33,9 +34,9 @@ let getSong = async (folder) => {
 };
 
 async function main() {
-  songs = await getSong("RepeatSongs");
+  songs = await getSong(`${currFolder}`);
   playAudio(
-    songs[0].split("/Songs/RepeatSongs/")[1].replaceAll("%20", " "),
+    songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " "),
     true
   );
 
@@ -48,7 +49,7 @@ async function main() {
     <div>
       ${
         songs[key]
-          .split("/Songs/RepeatSongs/")[1]
+          .split(`/Songs/${currFolder}/`)[1]
           .replaceAll("%20", " ")
           .split(".mp3")[0]
       }
@@ -118,11 +119,11 @@ async function main() {
     let inde = songs.indexOf(currentSong.src);
     if (inde > 0) {
       playAudio(
-        songs[inde - 1].split("/Songs/RepeatSongs/")[1].replaceAll("%20", " ")
+        songs[inde - 1].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
       );
     } else if (inde == 0) {
       playAudio(
-        songs[0].split("/Songs/RepeatSongs/")[1].replaceAll("%20", " ")
+        songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
       );
     }
   });
@@ -132,11 +133,11 @@ async function main() {
     let inde = songs.indexOf(currentSong.src);
     if (inde < songs.length - 1) {
       playAudio(
-        songs[inde + 1].split("/Songs/RepeatSongs/")[1].replaceAll("%20", " ")
+        songs[inde + 1].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
       );
     } else if (inde == songs.length - 1) {
       playAudio(
-        songs[0].split("/Songs/RepeatSongs/")[1].replaceAll("%20", " ")
+        songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
       );
     }
   });
