@@ -9,7 +9,7 @@ function secondsToMinutesSeconds(seconds) {
 }
 
 const playAudio = (track, pause = false) => {
-  currentSong.src = `/Songs/${currFolder}/` + track;
+  currentSong.src = `/tree/main/Songs/${currFolder}/` + track;
   if (!pause) {
     currentSong.play();
     playBut.src = "Svgs/pause.svg";
@@ -18,7 +18,7 @@ const playAudio = (track, pause = false) => {
   document.querySelector(".act-time").innerHTML = "00:00/00:00";
 };
 let getSong = async (folder) => {
-  let a = await fetch(`/Songs/${folder}`);
+  let a = await fetch(`/tree/main/Songs/${folder}`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -36,7 +36,7 @@ let getSong = async (folder) => {
 async function main() {
   songs = await getSong(`${currFolder}`);
   playAudio(
-    songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " "),
+    songs[0].split(`/tree/main/Songs/${currFolder}/`)[1].replaceAll("%20", " "),
     true
   );
 
@@ -49,7 +49,7 @@ async function main() {
     <div>
       ${
         songs[key]
-          .split(`/Songs/${currFolder}/`)[1]
+          .split(`/tree/main/Songs/${currFolder}/`)[1]
           .replaceAll("%20", " ")
           .split(".mp3")[0]
       }
@@ -119,11 +119,15 @@ async function main() {
     let inde = songs.indexOf(currentSong.src);
     if (inde > 0) {
       playAudio(
-        songs[inde - 1].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
+        songs[inde - 1]
+          .split(`/tree/main/Songs/${currFolder}/`)[1]
+          .replaceAll("%20", " ")
       );
     } else if (inde == 0) {
       playAudio(
-        songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
+        songs[0]
+          .split(`/tree/main/Songs/${currFolder}/`)[1]
+          .replaceAll("%20", " ")
       );
     }
   });
@@ -133,11 +137,15 @@ async function main() {
     let inde = songs.indexOf(currentSong.src);
     if (inde < songs.length - 1) {
       playAudio(
-        songs[inde + 1].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
+        songs[inde + 1]
+          .split(`/tree/main/Songs/${currFolder}/`)[1]
+          .replaceAll("%20", " ")
       );
     } else if (inde == songs.length - 1) {
       playAudio(
-        songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
+        songs[0]
+          .split(`/tree/main/Songs/${currFolder}/`)[1]
+          .replaceAll("%20", " ")
       );
     }
   });
