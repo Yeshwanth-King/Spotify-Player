@@ -1,7 +1,7 @@
 let playBut = document.querySelector(".playbut");
 let currentSong = new Audio();
 let songs;
-let currFolder = "NewSongs";
+let currFolder = "RepeatSongs";
 function secondsToMinutesSeconds(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = Math.floor(seconds % 60);
@@ -9,7 +9,7 @@ function secondsToMinutesSeconds(seconds) {
 }
 
 const playAudio = (track, pause = false) => {
-  currentSong.src = `/tree/main/Songs/${currFolder}/` + track;
+  currentSong.src = `/Songs/${currFolder}/` + track;
   if (!pause) {
     currentSong.play();
     playBut.src = "Svgs/pause.svg";
@@ -18,27 +18,20 @@ const playAudio = (track, pause = false) => {
   document.querySelector(".act-time").innerHTML = "00:00/00:00";
 };
 let getSong = async (folder) => {
-  let a = await fetch(`/tree/main/Songs/${folder}`);
+  currFolder = folder;
+  document.querySelector(".songul").innerHTML = "";
+  let a = await fetch(`/Songs/${currFolder}`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
   let ac = div.getElementsByTagName("a");
-  let song = [];
+  songs = [];
   for (let index = 0; index < ac.length; index++) {
     const element = ac[index];
     if (element.href.endsWith(".mp3")) {
-      song.push(element.href);
+      songs.push(element.href);
     }
   }
-  return song;
-};
-
-async function main() {
-  songs = await getSong(`${currFolder}`);
-  playAudio(
-    songs[0].split(`/tree/main/Songs/${currFolder}/`)[1].replaceAll("%20", " "),
-    true
-  );
 
   let songli = document.querySelector(".songul");
   for (let key in songs) {
@@ -49,7 +42,7 @@ async function main() {
     <div>
       ${
         songs[key]
-          .split(`/tree/main/Songs/${currFolder}/`)[1]
+          .split(`/Songs/${currFolder}/`)[1]
           .replaceAll("%20", " ")
           .split(".mp3")[0]
       }
@@ -64,6 +57,16 @@ async function main() {
         </li>
         `;
   }
+  return songs;
+};
+
+async function main() {
+  songs = await getSong(`${currFolder}`);
+  console.log(songs);
+  playAudio(
+    songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " "),
+    true
+  );
 
   let songList = Array.from(
     document.querySelector(".songsList").getElementsByTagName("li")
@@ -115,19 +118,14 @@ async function main() {
   });
 
   previous.addEventListener("click", () => {
-    console.log("P clicked");
     let inde = songs.indexOf(currentSong.src);
     if (inde > 0) {
       playAudio(
-        songs[inde - 1]
-          .split(`/tree/main/Songs/${currFolder}/`)[1]
-          .replaceAll("%20", " ")
+        songs[inde - 1].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
       );
     } else if (inde == 0) {
       playAudio(
-        songs[0]
-          .split(`/tree/main/Songs/${currFolder}/`)[1]
-          .replaceAll("%20", " ")
+        songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
       );
     }
   });
@@ -137,21 +135,24 @@ async function main() {
     let inde = songs.indexOf(currentSong.src);
     if (inde < songs.length - 1) {
       playAudio(
-        songs[inde + 1]
-          .split(`/tree/main/Songs/${currFolder}/`)[1]
-          .replaceAll("%20", " ")
+        songs[inde + 1].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
       );
     } else if (inde == songs.length - 1) {
       playAudio(
-        songs[0]
-          .split(`/tree/main/Songs/${currFolder}/`)[1]
-          .replaceAll("%20", " ")
+        songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
       );
     }
   });
 
   document.querySelector(".range").addEventListener("change", (e) => {
     currentSong.volume = e.target.value / 100;
+  });
+
+  Array.from(document.querySelectorAll(".card")).forEach((e) => {
+    e.addEventListener("click", async (event) => {
+      console.log(event.currentTarget.dataset.folder);
+      songs = await getSong(event.currentTarget.dataset.folder);
+    });
   });
 }
 main();
