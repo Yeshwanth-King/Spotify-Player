@@ -57,20 +57,11 @@ let getSong = async (folder) => {
         </li>
         `;
   }
-  return songs;
-};
-
-async function main() {
-  songs = await getSong(`${currFolder}`);
-  console.log(songs);
-  playAudio(
-    songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " "),
-    true
-  );
 
   let songList = Array.from(
     document.querySelector(".songsList").getElementsByTagName("li")
   );
+
   songList.forEach((element) => {
     element.addEventListener("click", () => {
       let adu = element
@@ -80,6 +71,16 @@ async function main() {
       playAudio(adu);
     });
   });
+
+  return songs;
+};
+
+async function main() {
+  songs = await getSong(`${currFolder}`);
+  playAudio(
+    songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " "),
+    true
+  );
 
   playBut.addEventListener("click", () => {
     if (currentSong.paused) {
@@ -150,7 +151,6 @@ async function main() {
 
   Array.from(document.querySelectorAll(".card")).forEach((e) => {
     e.addEventListener("click", async (event) => {
-      console.log(event.currentTarget.dataset.folder);
       songs = await getSong(event.currentTarget.dataset.folder);
     });
   });
