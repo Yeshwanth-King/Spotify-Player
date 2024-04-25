@@ -2,11 +2,66 @@ let playBut = document.querySelector(".playbut");
 let currentSong = new Audio();
 let songs;
 let currFolder = "RepeatSongs";
+let cardContainer = document.querySelector(".card-container");
 function secondsToMinutesSeconds(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = Math.floor(seconds % 60);
   return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 }
+
+const displayAlbum = async () => {
+  let a = await fetch(`/Songs/`);
+  let response = await a.text();
+  let div = document.createElement("div");
+  div.innerHTML = response;
+  let acs = div.getElementsByTagName("a");
+  let array = Array.from(acs);
+  for (let index = 0; index < array.length; index++) {
+    const e = array[index];
+    if (e.href.includes("/Songs/")) {
+      let folderName = e.href.split("/Songs/")[1];
+      console.log(folderName);
+      let a = await fetch(`/Songs/${folderName}/info.json`);
+      let response = await a.json();
+      console.log(response.title);
+      cardContainer.innerHTML += `
+      <div data-folder="${folderName}" class="card mg-1">
+      <div class="play">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 40 40"
+          width="40"
+          height="40"
+          fill="none"
+        >
+          <!-- Green Circle -->
+          <circle cx="20" cy="20" r="18" fill="#00FF00" />
+
+          <!-- Original SVG Path -->
+          <g transform="translate(9 9)">
+            <path
+              d="M18.8906 12.846C18.5371 14.189 16.8667 15.138 13.5257 17.0361C10.296 18.8709 8.6812 19.7884 7.37983 19.4196C6.8418 19.2671 6.35159 18.9776 5.95624 18.5787C5 17.6139 5 15.7426 5 12C5 8.2574 5 6.3861 5.95624 5.42132C6.35159 5.02245 6.8418 4.73288 7.37983 4.58042C8.6812 4.21165 10.296 5.12907 13.5257 6.96393C16.8667 8.86197 18.5371 9.811 18.8906 11.154C19.0365 11.7084 19.0365 12.2916 18.8906 12.846Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+            />
+          </g>
+        </svg>
+      </div>
+      <img src="/Songs/${folderName}/cover.jpg" alt="" class="rounded"/>
+      <h2>${response.title}</h2>
+      <p>${response.discription}</p>
+    </div>
+      `;
+    }
+  }
+
+  Array.from(document.querySelectorAll(".card")).forEach((e) => {
+    e.addEventListener("click", async (event) => {
+      songs = await getSong(event.currentTarget.dataset.folder);
+    });
+  });
+};
 
 const playAudio = (track, pause = false) => {
   currentSong.src = `/Songs/${currFolder}/` + track;
@@ -82,6 +137,8 @@ async function main() {
     true
   );
 
+  displayAlbum();
+
   playBut.addEventListener("click", () => {
     if (currentSong.paused) {
       currentSong.play();
@@ -147,12 +204,6 @@ async function main() {
 
   document.querySelector(".range").addEventListener("change", (e) => {
     currentSong.volume = e.target.value / 100;
-  });
-
-  Array.from(document.querySelectorAll(".card")).forEach((e) => {
-    e.addEventListener("click", async (event) => {
-      songs = await getSong(event.currentTarget.dataset.folder);
-    });
   });
 }
 main();
