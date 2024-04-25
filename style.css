@@ -190,6 +190,13 @@ body {
 .volume {
   display: flex;
   align-items: center;
+  cursor: pointer;
+}
+.volume img {
+  width: 27px;
+}
+.volume input {
+  cursor: pointer;
 }
 .songsList {
   height: 74vh;

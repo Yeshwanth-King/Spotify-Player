@@ -1,3 +1,4 @@
+let temp = 1;
 let playBut = document.querySelector(".playbut");
 let currentSong = new Audio();
 let songs;
@@ -204,6 +205,24 @@ async function main() {
 
   document.querySelector(".range").addEventListener("change", (e) => {
     currentSong.volume = e.target.value / 100;
+  });
+
+  volme.addEventListener("click", () => {
+    if (temp) {
+      currentSong.volume = 0;
+      volme.src = "Svgs/mute.svg";
+      document
+        .querySelector(".range")
+        .getElementsByTagName("input")[0].value = 0;
+      temp = 0;
+    } else {
+      temp = 1;
+      volme.src = "Svgs/volume.svg";
+      document
+        .querySelector(".range")
+        .getElementsByTagName("input")[0].value = 100;
+      currentSong.volume = 1;
+    }
   });
 }
 main();
