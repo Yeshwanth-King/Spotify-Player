@@ -2,7 +2,7 @@ let temp = 1;
 let playBut = document.querySelector(".playbut");
 let currentSong = new Audio();
 let songs;
-let currFolder = "RepeatSongs";
+let currFolder = "HerSongs";
 let cardContainer = document.querySelector(".card-container");
 function secondsToMinutesSeconds(seconds) {
   const minutes = Math.floor(seconds / 60);
@@ -21,10 +21,8 @@ const displayAlbum = async () => {
     const e = array[index];
     if (e.href.includes("/Songs/")) {
       let folderName = e.href.split("/Songs/")[1];
-      console.log(folderName);
       let a = await fetch(`/Songs/${folderName}/info.json`);
       let response = await a.json();
-      console.log(response.title);
       cardContainer.innerHTML += `
       <div data-folder="${folderName}" class="card mg-1">
       <div class="play">
@@ -69,12 +67,10 @@ const playNextSong = () => {
   let inde = songs.indexOf(currentSong.src);
   if (inde < songs.length - 1) {
     playAudio(
-      songs[inde + 1].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
+      songs[inde + 1].split(`/${currFolder}/`)[1].replaceAll("%20", " ")
     );
   } else if (inde == songs.length - 1) {
-    playAudio(
-      songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
-    );
+    playAudio(songs[0].split(`/${currFolder}/`)[1].replaceAll("%20", " "));
   }
 };
 
@@ -112,7 +108,7 @@ let getSong = async (folder) => {
     <div>
       ${
         songs[key]
-          .split(`/Songs/${currFolder}/`)[1]
+          .split(`/${currFolder}/`)[1]
           .replaceAll("%20", " ")
           .split(".mp3")[0]
       }
@@ -147,10 +143,7 @@ let getSong = async (folder) => {
 
 async function main() {
   songs = await getSong(`${currFolder}`);
-  playAudio(
-    songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " "),
-    true
-  );
+  playAudio(songs[0].split(`/${currFolder}/`)[1].replaceAll("%20", " "), true);
 
   displayAlbum();
 
@@ -166,7 +159,6 @@ async function main() {
 
   currentSong.addEventListener("timeupdate", () => {
     if (currentSong.currentTime == currentSong.duration) {
-      console.log("song ended");
       playNextSong();
     }
     document.querySelector(".act-time").innerHTML = `${secondsToMinutesSeconds(
@@ -198,12 +190,10 @@ async function main() {
     let inde = songs.indexOf(currentSong.src);
     if (inde > 0) {
       playAudio(
-        songs[inde - 1].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
+        songs[inde - 1].split(`/${currFolder}/`)[1].replaceAll("%20", " ")
       );
     } else if (inde == 0) {
-      playAudio(
-        songs[0].split(`/Songs/${currFolder}/`)[1].replaceAll("%20", " ")
-      );
+      playAudio(songs[0].split(`/${currFolder}/`)[1].replaceAll("%20", " "));
     }
   });
 
